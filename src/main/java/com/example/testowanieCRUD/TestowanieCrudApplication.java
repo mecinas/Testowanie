@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 
 @SpringBootApplication
@@ -25,14 +26,15 @@ public class TestowanieCrudApplication {
         return args -> {
             studentRepository.save(new StudentEntity("Damian", LocalDate.of(1999, 1, 1)));
             studentRepository.save(new StudentEntity("Jakub", LocalDate.of(1999, 2, 2)));
-
-            CourseEntity testowanie = new CourseEntity("Testowanie oprogramowania", 4);
-            courseRepository.save(testowanie);
-
             StudentEntity szymon = new StudentEntity("Szymon", LocalDate.of(1999, 3, 3));
             studentRepository.save(szymon);
 
-            szymon.getCourses().add(testowanie);
+            CourseEntity testowanie = new CourseEntity("Testowanie oprogramowania", 4);
+            CourseEntity programowanie = new CourseEntity("Programowanie obiektowe", 5);
+            courseRepository.saveAll(Arrays.asList(testowanie, programowanie));
+
+
+            szymon.getCourses().addAll(Arrays.asList(testowanie, programowanie));
             studentRepository.save(szymon);
         };
     }

@@ -50,5 +50,10 @@ public class CourseController {
     public void deleteCourse(@PathVariable Long id) {
         repository.deleteById(id);
     }
+
+    @GetMapping("/courses/ects/{ects}")
+    public List<CourseEntity> findByEcts(@PathVariable int ects) {
+        return repository.findByEcts(ects);
+    }
 }
 

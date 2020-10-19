@@ -1,6 +1,8 @@
 package com.example.testowanieCRUD;
 
+import com.example.testowanieCRUD.entity.CourseEntity;
 import com.example.testowanieCRUD.entity.StudentEntity;
+import com.example.testowanieCRUD.repository.CourseRepository;
 import com.example.testowanieCRUD.repository.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,12 +17,20 @@ public class TestowanieCrudApplication {
     }
 
     @Bean
-    CommandLineRunner initDatabase(StudentRepository repository) {
+    CommandLineRunner initDatabase(StudentRepository studentRepository, CourseRepository courseRepository) {
 
         return args -> {
-            repository.save(new StudentEntity("Damian"));
-            repository.save(new StudentEntity("Szymon"));
-            repository.save(new StudentEntity("Jakub"));
+            studentRepository.save(new StudentEntity("Damian"));
+            studentRepository.save(new StudentEntity("Jakub"));
+
+            CourseEntity testowanie = new CourseEntity("Testowanie oprogramowania", 4);
+            courseRepository.save(testowanie);
+
+            StudentEntity szymon = new StudentEntity("Szymon");
+            studentRepository.save(szymon);
+
+            szymon.getCourses().add(testowanie);
+            studentRepository.save(szymon);
         };
     }
 }

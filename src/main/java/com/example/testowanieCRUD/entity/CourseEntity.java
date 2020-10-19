@@ -1,17 +1,17 @@
 package com.example.testowanieCRUD.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
-@Entity(name = "students")
-public class StudentEntity implements Serializable {
+@Entity(name = "courses")
+public class CourseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,15 +21,23 @@ public class StudentEntity implements Serializable {
     @NotEmpty
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable
-    private Set<CourseEntity> courses = new HashSet<>();
+    @NotNull
+    private int ects;
 
-    public StudentEntity(String name) {
-        this.name = name;
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+    @JsonIgnore // prevents infinite loop when serializing
+    private Set<StudentEntity> students = new HashSet<>();
+
+    public Set<StudentEntity> getStudents() {
+        return students;
     }
 
-    public StudentEntity() {
+    public CourseEntity(String name, int ects) {
+        this.name = name;
+        this.ects = ects;
+    }
+
+    public CourseEntity() {
 
     }
 
@@ -49,7 +57,11 @@ public class StudentEntity implements Serializable {
         this.name = name;
     }
 
-    public Set<CourseEntity> getCourses() {
-        return courses;
+    public int getEcts() {
+        return ects;
+    }
+
+    public void setEcts(int ects) {
+        this.ects = ects;
     }
 }

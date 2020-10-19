@@ -24,7 +24,7 @@ public class CourseEntity {
     @NotNull
     private int ects;
 
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "courses")
     @JsonIgnore // prevents infinite loop when serializing
     private Set<StudentEntity> students = new HashSet<>();
 

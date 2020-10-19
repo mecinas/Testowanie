@@ -38,6 +38,7 @@ public class StudentController {
         return repository.findById(id)
                 .map(student -> {
                     student.setName(newStudent.getName());
+                    student.setDateOfBirth(newStudent.getDateOfBirth());
                     return repository.save(student);
                 })
                 .orElseGet(() -> {

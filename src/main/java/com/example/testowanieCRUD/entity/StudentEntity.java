@@ -29,6 +29,9 @@ public class StudentEntity implements Serializable {
     @JoinTable
     private Set<CourseEntity> courses = new HashSet<>();
 
+    @OneToMany(mappedBy = "student")
+    private Set<GradeEntity> grades = new HashSet<>();
+
     public StudentEntity(String name, LocalDate dateOfBirth) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -36,6 +39,10 @@ public class StudentEntity implements Serializable {
 
     public StudentEntity() {
 
+    }
+
+    public Set<GradeEntity> getGrades() {
+        return grades;
     }
 
     public Long getId() {

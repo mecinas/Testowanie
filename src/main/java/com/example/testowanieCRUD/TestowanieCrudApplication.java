@@ -1,8 +1,10 @@
 package com.example.testowanieCRUD;
 
 import com.example.testowanieCRUD.entity.CourseEntity;
+import com.example.testowanieCRUD.entity.GradeEntity;
 import com.example.testowanieCRUD.entity.StudentEntity;
 import com.example.testowanieCRUD.repository.CourseRepository;
+import com.example.testowanieCRUD.repository.GradeRepository;
 import com.example.testowanieCRUD.repository.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +23,9 @@ public class TestowanieCrudApplication {
     }
 
     @Bean
-    CommandLineRunner initDatabase(StudentRepository studentRepository, CourseRepository courseRepository) {
+    CommandLineRunner initDatabase(StudentRepository studentRepository,
+                                   CourseRepository courseRepository,
+                                   GradeRepository gradeRepository) {
 
         return args -> {
             studentRepository.save(new StudentEntity("Damian", LocalDate.of(1999, 1, 1)));
@@ -33,10 +37,11 @@ public class TestowanieCrudApplication {
             CourseEntity programowanie = new CourseEntity("Programowanie obiektowe", 5);
             courseRepository.saveAll(Arrays.asList(testowanie, programowanie));
 
-
             szymon.getCourses().addAll(Arrays.asList(testowanie, programowanie));
             studentRepository.save(szymon);
+
+            GradeEntity grade = new GradeEntity("2020Z", 4.0F, szymon, testowanie);
+            gradeRepository.save(grade);
         };
     }
 }
-

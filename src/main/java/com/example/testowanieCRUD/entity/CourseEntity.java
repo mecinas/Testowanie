@@ -28,6 +28,9 @@ public class CourseEntity {
     @JsonIgnore // prevents infinite loop when serializing
     private Set<StudentEntity> students = new HashSet<>();
 
+    @OneToMany(mappedBy = "course")
+    private Set<GradeEntity> grades = new HashSet<>();
+
     public Set<StudentEntity> getStudents() {
         return students;
     }

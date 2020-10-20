@@ -1,6 +1,6 @@
 package com.example.testowanieCRUD.controller;
 
-import com.example.testowanieCRUD.entity.StudentEntity;
+import com.example.testowanieCRUD.entity.Student;
 import com.example.testowanieCRUD.repository.StudentRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,25 +16,24 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<StudentEntity> all() {
+    public List<Student> all() {
         return repository.findAll();
     }
 
     @PostMapping("/students/add")
-    public StudentEntity newStudent(@RequestBody StudentEntity newStudent) {
+    public Student newStudent(@RequestBody Student newStudent) {
         return repository.save(newStudent);
     }
 
     @GetMapping("/students/{id}")
-    public StudentEntity one(@PathVariable Long id) {
+    public Student one(@PathVariable Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
     @PutMapping("/students/{id}")
-    public StudentEntity replaceStudent(@RequestBody StudentEntity newStudent, @PathVariable Long id) {
-
+    public Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
         return repository.findById(id)
                 .map(student -> {
                     student.setName(newStudent.getName());

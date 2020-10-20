@@ -1,12 +1,12 @@
 package com.example.testowanieCRUD.repository;
 
-import com.example.testowanieCRUD.entity.CourseEntity;
+import com.example.testowanieCRUD.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
-    List<CourseEntity> findByName(String name);
+public interface CourseRepository extends JpaRepository<Course, Long> {
+    List<Course> findByName(String name);
 
-    List<CourseEntity> findByEcts(int ects);
+    List<Course> findByEcts(int ects);
 }

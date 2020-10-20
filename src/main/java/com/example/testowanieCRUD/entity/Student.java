@@ -5,14 +5,13 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity(name = "students")
-public class StudentEntity implements Serializable {
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,21 +26,21 @@ public class StudentEntity implements Serializable {
 
     @ManyToMany
     @JoinTable
-    private Set<CourseEntity> courses = new HashSet<>();
+    private final Set<Course> courses = new HashSet<>();
 
     @OneToMany(mappedBy = "student")
-    private Set<GradeEntity> grades = new HashSet<>();
+    private final Set<Grade> grades = new HashSet<>();
 
-    public StudentEntity(String name, LocalDate dateOfBirth) {
+    public Student(@NotEmpty String name, LocalDate dateOfBirth) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
     }
 
-    public StudentEntity() {
+    public Student() {
 
     }
 
-    public Set<GradeEntity> getGrades() {
+    public Set<Grade> getGrades() {
         return grades;
     }
 
@@ -69,7 +68,7 @@ public class StudentEntity implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Set<CourseEntity> getCourses() {
+    public Set<Course> getCourses() {
         return courses;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.testowanieCRUD.controller;
 
-import com.example.testowanieCRUD.entity.CourseEntity;
+import com.example.testowanieCRUD.entity.Course;
 import com.example.testowanieCRUD.repository.CourseRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,24 +16,23 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public List<CourseEntity> all() {
+    public List<Course> all() {
         return repository.findAll();
     }
 
     @PostMapping("/courses/add")
-    public CourseEntity newCourse(@RequestBody CourseEntity newCourse) {
+    public Course newCourse(@RequestBody Course newCourse) {
         return repository.save(newCourse);
     }
 
     @GetMapping("/courses/{id}")
-    public CourseEntity one(@PathVariable Long id) {
+    public Course one(@PathVariable Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
     }
 
     @PutMapping("/courses/{id}")
-    public CourseEntity replaceCourse(@RequestBody CourseEntity newCourse, @PathVariable Long id) {
-
+    public Course replaceCourse(@RequestBody Course newCourse, @PathVariable Long id) {
         return repository.findById(id)
                 .map(course -> {
                     course.setName(newCourse.getName());
@@ -52,7 +51,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/ects/{ects}")
-    public List<CourseEntity> findByEcts(@PathVariable int ects) {
+    public List<Course> findByEcts(@PathVariable int ects) {
         return repository.findByEcts(ects);
     }
 }

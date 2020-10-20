@@ -1,8 +1,8 @@
 package com.example.testowanieCRUD;
 
-import com.example.testowanieCRUD.entity.CourseEntity;
-import com.example.testowanieCRUD.entity.GradeEntity;
-import com.example.testowanieCRUD.entity.StudentEntity;
+import com.example.testowanieCRUD.entity.Course;
+import com.example.testowanieCRUD.entity.Grade;
+import com.example.testowanieCRUD.entity.Student;
 import com.example.testowanieCRUD.repository.CourseRepository;
 import com.example.testowanieCRUD.repository.GradeRepository;
 import com.example.testowanieCRUD.repository.StudentRepository;
@@ -28,19 +28,19 @@ public class TestowanieCrudApplication {
                                    GradeRepository gradeRepository) {
 
         return args -> {
-            studentRepository.save(new StudentEntity("Damian", LocalDate.of(1999, 1, 1)));
-            studentRepository.save(new StudentEntity("Jakub", LocalDate.of(1999, 2, 2)));
-            StudentEntity szymon = new StudentEntity("Szymon", LocalDate.of(1999, 3, 3));
+            studentRepository.save(new Student("Damian", LocalDate.of(1999, 1, 1)));
+            studentRepository.save(new Student("Jakub", LocalDate.of(1999, 2, 2)));
+            Student szymon = new Student("Szymon", LocalDate.of(1999, 3, 3));
             studentRepository.save(szymon);
 
-            CourseEntity testowanie = new CourseEntity("Testowanie oprogramowania", 4);
-            CourseEntity programowanie = new CourseEntity("Programowanie obiektowe", 5);
+            Course testowanie = new Course("Testowanie oprogramowania", 4);
+            Course programowanie = new Course("Programowanie obiektowe", 5);
             courseRepository.saveAll(Arrays.asList(testowanie, programowanie));
 
             szymon.getCourses().addAll(Arrays.asList(testowanie, programowanie));
             studentRepository.save(szymon);
 
-            GradeEntity grade = new GradeEntity("2020Z", 4.0F, szymon, testowanie);
+            Grade grade = new Grade("2020Z", 4.0F, szymon, testowanie);
             gradeRepository.save(grade);
         };
     }

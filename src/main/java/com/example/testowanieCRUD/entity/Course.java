@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 @Entity(name = "courses")
-public class CourseEntity {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,21 +26,21 @@ public class CourseEntity {
 
     @ManyToMany(mappedBy = "courses")
     @JsonIgnore // prevents infinite loop when serializing
-    private Set<StudentEntity> students = new HashSet<>();
+    private final Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "course")
-    private Set<GradeEntity> grades = new HashSet<>();
+    private final Set<Grade> grades = new HashSet<>();
 
-    public Set<StudentEntity> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public CourseEntity(String name, int ects) {
+    public Course(@NotEmpty String name, int ects) {
         this.name = name;
         this.ects = ects;
     }
 
-    public CourseEntity() {
+    public Course() {
 
     }
 

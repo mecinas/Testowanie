@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 
 
 @Entity(name = "grades")
-public class GradeEntity {
+public class Grade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,21 +25,21 @@ public class GradeEntity {
     @ManyToOne
     @JoinColumn
     @JsonIgnore // prevents infinite loop when serializing
-    private StudentEntity student;
+    private Student student;
 
     @ManyToOne
     @JoinColumn
     @JsonIgnore // prevents infinite loop when serializing
-    private CourseEntity course;
+    private Course course;
 
-    public GradeEntity(@NotEmpty String semester, float grade, StudentEntity student, CourseEntity course) {
+    public Grade(@NotEmpty String semester, float grade, @NotEmpty Student student, @NotEmpty Course course) {
         this.semester = semester;
         this.grade = grade;
         this.student = student;
         this.course = course;
     }
 
-    public GradeEntity() {
+    public Grade() {
 
     }
 

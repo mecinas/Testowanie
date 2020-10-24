@@ -28,20 +28,39 @@ public class TestowanieCrudApplication {
                                    GradeRepository gradeRepository) {
 
         return args -> {
-            studentRepository.save(new Student("Damian", LocalDate.of(1999, 1, 1)));
-            studentRepository.save(new Student("Jakub", LocalDate.of(1999, 2, 2)));
-            Student szymon = new Student("Szymon", LocalDate.of(1999, 3, 3));
+            Student damian = new Student("Damian", LocalDate.of(1999, 1, 1));
+            Student szymon = new Student("Szymon", LocalDate.of(1990, 3, 3));
+            Student jakub = new Student("Jakub", LocalDate.of(2010, 2, 2));
+            studentRepository.save(damian);
             studentRepository.save(szymon);
+            studentRepository.save(jakub);
+
 
             Course testowanie = new Course("Testowanie oprogramowania", 4);
             Course programowanie = new Course("Programowanie obiektowe", 5);
-            courseRepository.saveAll(Arrays.asList(testowanie, programowanie));
+            Course ochrona = new Course("Ochrona danych", 3);
+            Course angielski = new Course("Język angielski", 1);
+            courseRepository.saveAll(Arrays.asList(testowanie, programowanie, ochrona, angielski));
 
-            szymon.getCourses().addAll(Arrays.asList(testowanie, programowanie));
+
+            damian.getCourses().addAll(Arrays.asList(testowanie, ochrona, programowanie));
+            szymon.getCourses().addAll(Arrays.asList(programowanie, ochrona, angielski));
+            jakub.getCourses().addAll(Arrays.asList(testowanie, programowanie, ochrona));
             studentRepository.save(szymon);
 
-            Grade grade = new Grade("2020Z", 4.0F, szymon, testowanie);
-            gradeRepository.save(grade);
+
+            Grade dtg = new Grade("2017Z", 5.0F, damian, testowanie); // damianTestowanieGrade = dtg
+            Grade dpg = new Grade("2012Z", 3.0F, damian, programowanie);
+            Grade sog = new Grade("2019Z", 4.0F, szymon, ochrona);
+            Grade sag = new Grade("2018Z", 3.0F, szymon, angielski);
+            Grade jtg = new Grade("2010Z", 5.0F, jakub, testowanie);
+            Grade jog = new Grade("2015Z", 4.0F, jakub, ochrona);
+            gradeRepository.save(dtg);
+            gradeRepository.save(dpg);
+            gradeRepository.save(sog);
+            gradeRepository.save(sag);
+            gradeRepository.save(jtg);
+            gradeRepository.save(jog);
         };
     }
 }

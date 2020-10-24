@@ -3,15 +3,17 @@ package com.example.testowanieCRUD;
 import com.example.testowanieCRUD.entity.Course;
 import com.example.testowanieCRUD.entity.Grade;
 import com.example.testowanieCRUD.entity.Student;
-import com.example.testowanieCRUD.repository.StudentRepository;
 import com.example.testowanieCRUD.repository.CourseRepository;
 import com.example.testowanieCRUD.repository.GradeRepository;
+import com.example.testowanieCRUD.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -38,6 +40,38 @@ class TestowanieCrudApplicationTests {
 		assert(student.getName().compareTo("Szymon") == 0);
 	}
 
+	@Test
+	public void testFindStudentById(){
+		Optional<Student> student = studentRepository.findById(3L);
+		assert(student.isPresent() && (student.get().getId() == 3L));
+	}
+
+	@Test
+	public void testFindAllStudents(){
+		List<Student> students = studentRepository.findAll();
+		assert(students.size() == 3);
+	}
+
+	@Test
+	public void testUpdateStudent() {
+		Student student = studentRepository.findById(3L).orElseThrow();
+		assert(!student.getName().equals("Mariusz"));
+		student.setName("Mariusz");
+		studentRepository.save(student);
+
+		Student updatedStudent = studentRepository.findById(3L).orElseThrow();
+		assert(updatedStudent.getName().equals("Mariusz"));
+	}
+
+	@Test
+	public void testRemoveStudent() {
+		Optional<Student> student = studentRepository.findById(3L);
+		assert(student.isPresent());
+		studentRepository.deleteById(3L);
+
+		Optional<Student> studentAfterRemoval = studentRepository.findById(3L);
+		assert(studentAfterRemoval.isEmpty());
+	}
 
 
 	@Autowired
@@ -61,6 +95,16 @@ class TestowanieCrudApplicationTests {
 		assert(course.getName().compareTo("Testowanie oprogramowania") == 0);
 	}
 
+	@Test
+	public void testUpdateCourse() {
+		Course course = courseRepository.findByName("Testowanie oprogramowania").get(0);
+		assert(course.getEcts() == 4);
+		course.setEcts(6);
+		courseRepository.save(course);
+
+		Course courseAfterUpdate = courseRepository.findByName("Testowanie oprogramowania").get(0);
+		assert(courseAfterUpdate.getEcts() == 6);
+	}
 
 
 	@Autowired
@@ -85,4 +129,25 @@ class TestowanieCrudApplicationTests {
 		Grade grade = gradeRepository.findBySemester("2019Z").get(0);
 		assert(Math.abs(grade.getGrade() - 4.0F) < 0.0001);
 	}
+
+	@Test
+	public void testUpdateGrade() {
+		Grade grade = gradeRepository.findBySemester("2010Z").get(0);
+		assert(Math.abs(grade.getGrade() - 5.0F) < 0.0001);
+		grade.setGrade(4.0F);
+		gradeRepository.save(grade);
+
+		Grade gradeAfterUpdate = gradeRepository.findBySemester("2010Z").get(0);
+		assert(Math.abs(grade.getGrade() - 4.0F) < 0.0001);
+	}
+
+	@Test
+	public void testRemoveGrade() {
+		Grade grade = gradeRepository.findBySemester("2010Z").get(0);
+		gradeRepository.delete(grade);
+
+		List<Grade> gradeAfterRemoval = gradeRepository.findBySemester("2010Z");
+		assert(gradeAfterRemoval.size() == 0);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.example.testowanieCRUD;
 
+import com.example.testowanieCRUD.entity.Course;
+import com.example.testowanieCRUD.entity.Grade;
 import com.example.testowanieCRUD.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class StudentControllerTests {
+public class GradeControllerTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -28,56 +30,83 @@ public class StudentControllerTests {
     }
 
     @Test
-    public void testCreateStudent() {
-        Student student = new Student("Ala", LocalDate.of(2000, 4, 4));
-        ResponseEntity<Student> postResponse = restTemplate.postForEntity(getRootUrl() + "/students/add", student, Student.class);
+    public void testGetAllGrades() {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades",
+                HttpMethod.GET, entity, String.class);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+
+    @Test
+    public void testAddGrade() {
+        Student sebastian = new Student("Sebastian", LocalDate.of(2011, 1, 2));
+        Course rosyjski = new Course("Język Rosyjski", 1);
+        Grade grade = new Grade("2012Z", 3.0F, sebastian, rosyjski);
+
+        ResponseEntity<Grade> postResponse = restTemplate.postForEntity(getRootUrl() + "/grades/add", grade, Grade.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
         assertEquals(HttpStatus.OK, postResponse.getStatusCode());
     }
 
-    @Test
-    public void testGetAllStudents() {
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/students",
-                HttpMethod.GET, entity, String.class);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
 
     @Test
-    public void testGetStudentById() {
-        int id = 1;
+    public void testGetGradeById() {
+        int id = 3;
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/students/" + id,
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/" + id,
                 HttpMethod.GET, entity, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
     }
 
     @Test
-    public void testUpdateStudent() {
+    public void testUpdateGrade() {
         int id = 1;
-        Student student = restTemplate.getForObject(getRootUrl() + "/students/" + id, Student.class);
-        student.setName("NameChanged");
-        restTemplate.put(getRootUrl() + "/students/" + id, student);
-        Student updatedStudent = restTemplate.getForObject(getRootUrl() + "/students/" + id, Student.class);
-        assertNotNull(updatedStudent);
-        assertEquals(updatedStudent.getName(), "NameChanged");
+        Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
+        grade.setSemester("2017Z");
+        restTemplate.put(getRootUrl() + "/grades/" + id, grade);
+        Grade updatedGrade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
+        assertNotNull(updatedGrade);
+        assertEquals(updatedGrade.getSemester(), "2017Z");
     }
 
     @Test
-    public void testDeleteStudent() {
+    public void testDeleteGrade() {
         int id = 1;
-        Student student = restTemplate.getForObject(getRootUrl() + "/students/" + id, Student.class);
-        assertNotNull(student);
-        restTemplate.delete(getRootUrl() + "/students/" + id);
+        Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
+        assertNotNull(grade);
+        restTemplate.delete(getRootUrl() + "/grades/" + id);
         try {
-            restTemplate.getForObject(getRootUrl() + "/students/" + id, Student.class);
+            restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Test
+    public void testFindGradesByValue() {
+        float gradeValue = 3.0F;
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/grade/" + gradeValue,
+                HttpMethod.GET, entity, String.class);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testFindGradesBySemester() {
+        String semester = "2012Z";
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/semester/" + semester,
+                HttpMethod.GET, entity, String.class);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }

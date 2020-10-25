@@ -35,7 +35,7 @@ public class GradeController {
     public Grade replaceGrade(@RequestBody Grade newGrade, @PathVariable Long id) {
         return repository.findById(id)
                 .map(grade -> {
-                    grade.setGrade(newGrade.getGrade());
+                    grade.setValue(newGrade.getValue());
                     grade.setSemester(newGrade.getSemester());
                     return repository.save(grade);
                 })
@@ -50,9 +50,9 @@ public class GradeController {
         repository.deleteById(id);
     }
 
-    @GetMapping("/grades/grade/{grade}")
-    public List<Grade> findByGrade(@PathVariable float grade) {
-        return repository.findByGrade(grade);
+    @GetMapping("/grades/value/{value}")
+    public List<Grade> findByValue(@PathVariable float value) {
+        return repository.findByValue(value);
     }
 
     @GetMapping("/grades/semester/{semester}")

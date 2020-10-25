@@ -20,7 +20,7 @@ public class Grade {
     private String semester;
 
     @NotNull
-    private float grade;
+    private float value;
 
     @ManyToOne
     @JoinColumn
@@ -32,9 +32,9 @@ public class Grade {
     @JsonIgnore // prevents infinite loop when serializing
     private Course course;
 
-    public Grade(@NotEmpty String semester, float grade, @NotEmpty Student student, @NotEmpty Course course) {
+    public Grade(@NotEmpty String semester, float value, @NotEmpty Student student, @NotEmpty Course course) {
         this.semester = semester;
-        this.grade = grade;
+        this.value = value;
         this.student = student;
         this.course = course;
     }
@@ -59,11 +59,11 @@ public class Grade {
         this.semester = semester;
     }
 
-    public float getGrade() {
-        return grade;
+    public float getValue() {
+        return value;
     }
 
-    public void setGrade(float grade) {
-        this.grade = grade;
+    public void setValue(float value) {
+        this.value = value;
     }
 }

@@ -29,25 +29,25 @@ public class GradeRepositoryTests {
 
     @Test
     public void testFindGradeByItsValue(){
-        Grade grade = gradeRepository.findByGrade(3.0F).get(0);
+        Grade grade = gradeRepository.findByValue(3.0F).get(0);
         assert(grade.getSemester().compareTo("2012Z") == 0);
     }
 
     @Test
     public void testFindGradeBySemester(){
         Grade grade = gradeRepository.findBySemester("2019Z").get(0);
-        assert(Math.abs(grade.getGrade() - 4.0F) < 0.0001);
+        assert(Math.abs(grade.getValue() - 4.0F) < 0.0001);
     }
 
     @Test
     public void testUpdateGrade() {
         Grade grade = gradeRepository.findBySemester("2010Z").get(0);
-        assert(Math.abs(grade.getGrade() - 5.0F) < 0.0001);
-        grade.setGrade(4.0F);
+        assert(Math.abs(grade.getValue() - 5.0F) < 0.0001);
+        grade.setValue(4.0F);
         gradeRepository.save(grade);
 
         Grade gradeAfterUpdate = gradeRepository.findBySemester("2010Z").get(0);
-        assert(Math.abs(grade.getGrade() - 4.0F) < 0.0001);
+        assert(Math.abs(grade.getValue() - 4.0F) < 0.0001);
     }
 
     @Test

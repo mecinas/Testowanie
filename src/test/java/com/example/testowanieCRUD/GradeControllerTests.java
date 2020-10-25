@@ -32,17 +32,6 @@ public class GradeControllerTests {
     }
 
     @Test
-    public void testGetAllGrades() {
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades",
-                HttpMethod.GET, entity, String.class);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-
-    @Test
     public void testAddGrade() {
         Student sebastian = new Student("Sebastian", LocalDate.of(2011, 1, 2));
         Course rosyjski = new Course("Język Rosyjski", 1);
@@ -54,10 +43,19 @@ public class GradeControllerTests {
         assertEquals(HttpStatus.OK, postResponse.getStatusCode());
     }
 
+    @Test
+    public void testGetAllGrades() {
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades",
+                HttpMethod.GET, entity, String.class);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 
     @Test
     public void testGetGradeById() {
-        int id = 1;
+        int id = 8;
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/" + id,
@@ -68,13 +66,35 @@ public class GradeControllerTests {
 
     @Test
     public void testUpdateGrade() {
-        int id = 2;
+        int id = 8;
         Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         grade.setSemester("2017Z");
         restTemplate.put(getRootUrl() + "/grades/" + id, grade);
         Grade updatedGrade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         assertNotNull(updatedGrade);
         assertEquals(updatedGrade.getSemester(), "2017Z");
+    }
+
+    @Test
+    public void testFindGradesByValue() {
+        float gradeValue = 5.0F;
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/value/" + gradeValue,
+                HttpMethod.GET, entity, String.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+    }
+
+    @Test
+    public void testFindGradesBySemester() {
+        String semester = "2012Z";
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/semester/" + semester,
+                HttpMethod.GET, entity, String.class);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -88,27 +108,5 @@ public class GradeControllerTests {
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }
-    }
-
-    @Test
-    public void testFindGradesByValue() {
-        float gradeValue = 3.0F;
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/grade/" + gradeValue,
-                HttpMethod.GET, entity, String.class);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    public void testFindGradesBySemester() {
-        String semester = "2012Z";
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/semester/" + semester,
-                HttpMethod.GET, entity, String.class);
-        assertNotNull(response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }

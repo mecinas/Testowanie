@@ -51,13 +51,14 @@ public class GradeController {
     }
 
     @GetMapping("/grades/grade/{grade}")
-    public List<Grade> findByEcts(@PathVariable float grade) {
+    public List<Grade> findByGrade(@PathVariable float grade) {
         return repository.findByGrade(grade);
     }
 
     @GetMapping("/grades/semester/{semester}")
-    public List<Grade> findByEcts(@PathVariable String semester) {
+    public List<Grade> findBySemester(@PathVariable String semester) {
         return repository.findBySemester(semester);
     }
+
 }
 

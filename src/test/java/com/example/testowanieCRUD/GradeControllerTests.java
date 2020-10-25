@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class GradeControllerTests {
 
     @Autowired
@@ -55,7 +57,7 @@ public class GradeControllerTests {
 
     @Test
     public void testGetGradeById() {
-        int id = 3;
+        int id = 1;
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/" + id,
@@ -66,7 +68,7 @@ public class GradeControllerTests {
 
     @Test
     public void testUpdateGrade() {
-        int id = 1;
+        int id = 2;
         Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         grade.setSemester("2017Z");
         restTemplate.put(getRootUrl() + "/grades/" + id, grade);
@@ -77,7 +79,7 @@ public class GradeControllerTests {
 
     @Test
     public void testDeleteGrade() {
-        int id = 1;
+        int id = 2;
         Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         assertNotNull(grade);
         restTemplate.delete(getRootUrl() + "/grades/" + id);

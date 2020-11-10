@@ -55,7 +55,7 @@ public class GradeControllerTests {
 
     @Test
     public void testGetGradeById() {
-        int id = 8;
+        int id = 16;
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/" + id,
@@ -66,7 +66,7 @@ public class GradeControllerTests {
 
     @Test
     public void testUpdateGrade() {
-        int id = 8;
+        int id = 16;
         Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         grade.setSemester("2017Z");
         restTemplate.put(getRootUrl() + "/grades/" + id, grade);
@@ -99,7 +99,7 @@ public class GradeControllerTests {
 
     @Test
     public void testDeleteGrade() {
-        int id = 2;
+        int id = 17;
         Grade grade = restTemplate.getForObject(getRootUrl() + "/grades/" + id, Grade.class);
         assertNotNull(grade);
         restTemplate.delete(getRootUrl() + "/grades/" + id);

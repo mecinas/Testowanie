@@ -1,8 +1,6 @@
 package com.example.testowanieCRUD;
 
-import com.example.testowanieCRUD.entity.Student;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +31,7 @@ public class TDDGradeLogicTest {
 
 
     @Test
-    public void testfindFailedGrades() throws JSONException {
+    public void testFindFailedGrades() throws JSONException {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/grades/failed",
@@ -49,7 +47,7 @@ public class TDDGradeLogicTest {
     }
 
     @Test
-    public void testcheckStudentECTS() throws JsonProcessingException, JSONException {
+    public void testCheckStudentECTS() throws JSONException {
         int id = 1;
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
@@ -62,7 +60,7 @@ public class TDDGradeLogicTest {
         int ectsSum = 0;
         for (int i = 0; i < coursesArray.length(); i++) {
             JSONObject course = coursesArray.getJSONObject(i);
-            ectsSum += (int)course.get("ects");
+            ectsSum += (int) course.get("ects");
         }
 
         response = restTemplate.exchange(getRootUrl() + "/students/checkECTS",
@@ -71,13 +69,13 @@ public class TDDGradeLogicTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         JSONObject ectsJSON = new JSONObject(response.getBody());
         if (ectsSum < 30)
-            assertEquals("Student nie posiada wymaganej liczby ECTS",ectsJSON.get("ectsInfo")); // Stworzona funkcja ma JSON z polem ectsInfo
+            assertEquals("Student nie posiada wymaganej liczby ECTS", ectsJSON.get("ectsInfo")); // Stworzona funkcja ma JSON z polem ectsInfo
         else
-            assertEquals("Student posiada wymaganą liczbę ECTS",ectsJSON.get("ectsInfo"));
+            assertEquals("Student posiada wymaganą liczbę ECTS", ectsJSON.get("ectsInfo"));
     }
 
     @Test
-    public void testaverageGrade() throws JSONException {
+    public void testAverageGrade() throws JSONException {
         int id = 2;
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
@@ -100,6 +98,6 @@ public class TDDGradeLogicTest {
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         JSONObject averageJSON = new JSONObject(response.getBody());
-        assertEquals(average, (double)averageJSON.get("average")); // Wynik zapytania jest JSON i ma pole average
+        assertEquals(average, (double) averageJSON.get("average")); // Wynik zapytania jest JSON i ma pole average
     }
 }

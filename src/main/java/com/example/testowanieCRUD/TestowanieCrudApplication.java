@@ -36,16 +36,28 @@ public class TestowanieCrudApplication {
             studentRepository.save(jakub);
 
 
+
             Course testowanie = new Course("Testowanie oprogramowania", 4);
             Course programowanie = new Course("Programowanie obiektowe", 5);
             Course ochrona = new Course("Ochrona danych", 3);
             Course angielski = new Course("Język angielski", 1);
-            courseRepository.saveAll(Arrays.asList(testowanie, programowanie, ochrona, angielski));
+            Course modelowanie = new Course("Modelowanie biznesowe", 3);
+            Course fizyka = new Course("Fizyka ogólna", 1);
+            Course bazy = new Course("Modelowanie baz danych", 3);
+            Course azure = new Course("Tworzenie aplikacji Azure", 4);
+            Course niemiecki = new Course("Język niemiecki", 3);
+            Course grafika = new Course("Grafika komputerowa", 5);
+            Course systemy = new Course("Systemy operacyjne", 3);
+            Course obwody = new Course("Teoria obwodów i sygnałów", 1);
+
+            courseRepository.saveAll(Arrays.asList(testowanie, programowanie, ochrona, angielski, modelowanie, fizyka, bazy, azure, niemiecki, grafika, systemy, obwody));
 
 
-            damian.getCourses().addAll(Arrays.asList(testowanie, ochrona, programowanie));
+            damian.getCourses().addAll(Arrays.asList(testowanie, programowanie, ochrona,
+                    angielski, modelowanie, fizyka, bazy, azure, niemiecki, grafika));
             szymon.getCourses().addAll(Arrays.asList(programowanie, ochrona, angielski));
             jakub.getCourses().addAll(Arrays.asList(testowanie, programowanie, ochrona));
+            studentRepository.save(damian);
             studentRepository.save(szymon);
 
 

@@ -63,7 +63,7 @@ public class TDDGradeLogicTest {
             ectsSum += (int) course.get("ects");
         }
 
-        response = restTemplate.exchange(getRootUrl() + "/students/checkECTS",
+        response = restTemplate.exchange(getRootUrl() + "/students/checkECTS/" + id,
                 HttpMethod.GET, entity, String.class);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -93,7 +93,7 @@ public class TDDGradeLogicTest {
         }
         double average = gradesValueSum / gradesArray.length();
 
-        response = restTemplate.exchange(getRootUrl() + "/students/checkAverage",
+        response = restTemplate.exchange(getRootUrl() + "/students/checkAverage/" + id,
                 HttpMethod.GET, entity, String.class);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());

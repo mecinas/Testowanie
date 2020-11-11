@@ -2,6 +2,7 @@ package com.example.testowanieCRUD.controller;
 
 import com.example.testowanieCRUD.entity.Grade;
 import com.example.testowanieCRUD.repository.GradeRepository;
+import com.example.testowanieCRUD.service.GradeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 public class GradeController {
 
     private final GradeRepository repository;
+    private final GradeService gradeService;
 
-    GradeController(GradeRepository repository) {
+    GradeController(GradeRepository repository, GradeService gradeService) {
         this.repository = repository;
+        this.gradeService = gradeService;
     }
 
     @GetMapping("/grades")
@@ -58,6 +61,11 @@ public class GradeController {
     @GetMapping("/grades/semester/{semester}")
     public List<Grade> findBySemester(@PathVariable String semester) {
         return repository.findBySemester(semester);
+    }
+
+    @GetMapping("/grades/failed")
+    public List<Grade> findByIsFailed() {
+        return gradeService.getFailed();
     }
 
 }

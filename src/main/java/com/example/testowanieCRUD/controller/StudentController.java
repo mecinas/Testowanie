@@ -2,17 +2,22 @@ package com.example.testowanieCRUD.controller;
 
 import com.example.testowanieCRUD.entity.Student;
 import com.example.testowanieCRUD.repository.StudentRepository;
+import com.example.testowanieCRUD.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class StudentController {
 
     private final StudentRepository repository;
+    private final StudentService studentService;
 
-    StudentController(StudentRepository repository) {
+    StudentController(StudentRepository repository, StudentService studentService) {
         this.repository = repository;
+        this.studentService = studentService;
     }
 
     @GetMapping("/students")
@@ -49,6 +54,19 @@ public class StudentController {
     @DeleteMapping("/students/{id}")
     public void deleteStudent(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    @GetMapping("/students/checkECTS/{id}")
+    public Map<String, String> checkECTS(@PathVariable Long id) {
+        int ects = studentService.getStudentsECTS(id);
+        String response = studentService.checkStudentsECTS(ects);
+        return Collections.singletonMap("ectsInfo", response);
+    }
+
+    @GetMapping("/students/checkAverage/{id}")
+    public Map<String, Double> getAverageGrade(@PathVariable Long id) {
+        double avg = studentService.getAverageGrade(id);
+        return Collections.singletonMap("average", avg);
     }
 }
 

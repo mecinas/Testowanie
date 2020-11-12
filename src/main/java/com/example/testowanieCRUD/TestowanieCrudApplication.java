@@ -67,12 +67,16 @@ public class TestowanieCrudApplication {
             Grade sag = new Grade("2018Z", 3.0F, szymon, angielski);
             Grade jtg = new Grade("2010Z", 5.0F, jakub, testowanie);
             Grade jog = new Grade("2015Z", 4.0F, jakub, ochrona);
+            Grade stg = new Grade("2019L", 2.0F, szymon, fizyka);
+            Grade sng = new Grade("2019L", 2.0F, szymon, niemiecki);
             gradeRepository.save(dtg);
             gradeRepository.save(dpg);
             gradeRepository.save(sog);
             gradeRepository.save(sag);
             gradeRepository.save(jtg);
             gradeRepository.save(jog);
+            gradeRepository.save(stg);
+            gradeRepository.save(sng);
         };
     }
 }

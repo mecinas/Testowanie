@@ -5,6 +5,7 @@ import com.example.testowanieCRUD.repository.GradeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GradeService {
@@ -17,5 +18,9 @@ public class GradeService {
 
     public List<Grade> getFailed() {
         return gradeRepository.findByValue(2f);
+    }
+
+    public List<Grade> findPassingGrades() {
+        return gradeRepository.findAll().stream().filter(x -> x.getValue() >= 3.0).collect(Collectors.toList());
     }
 }

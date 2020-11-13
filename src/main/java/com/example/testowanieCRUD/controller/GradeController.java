@@ -6,6 +6,8 @@ import com.example.testowanieCRUD.service.GradeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class GradeController {
@@ -66,6 +68,11 @@ public class GradeController {
     @GetMapping("/grades/failed")
     public List<Grade> findByIsFailed() {
         return gradeService.getFailed();
+    }
+
+    @GetMapping("/grades/passed")
+    public List<Grade> findPassingGrades() {
+        return gradeService.findPassingGrades();
     }
 
 }

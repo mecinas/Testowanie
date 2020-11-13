@@ -16,11 +16,11 @@ public class GradeService {
         this.gradeRepository = gradeRepository;
     }
 
-    public List<Grade> getFailed() {
+    public List<Grade> getFailedGrades() {
         return gradeRepository.findByValue(2f);
     }
 
-    public List<Grade> findPassingGrades() {
+    public List<Grade> getPassingGrades() {
         return gradeRepository.findAll().stream().filter(x -> x.getValue() >= 3.0).collect(Collectors.toList());
     }
 }

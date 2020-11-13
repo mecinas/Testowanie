@@ -37,9 +37,9 @@ public class TDDGradeLogicTest {
     @Test
     public void testFindFailedGrades() throws JSONException {
         ResponseEntity<String> response = getResponse("/grades/failed");
-
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
         JSONArray jsonArr = new JSONArray(response.getBody());
         for (int i = 0; i < jsonArr.length(); i++) {
             JSONObject jsonObj = jsonArr.getJSONObject(i);
@@ -53,6 +53,7 @@ public class TDDGradeLogicTest {
         ResponseEntity<String> response = getResponse("/students/" + id);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
         JSONObject jsonObj = new JSONObject(response.getBody());
         JSONArray coursesArray = (JSONArray) jsonObj.get("courses");
         int ectsSum = 0;
@@ -60,10 +61,10 @@ public class TDDGradeLogicTest {
             JSONObject course = coursesArray.getJSONObject(i);
             ectsSum += (int) course.get("ects");
         }
-
         response = getResponse("/students/checkECTS/" + id);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
         JSONObject ectsJSON = new JSONObject(response.getBody());
         if (ectsSum < 30)
             assertEquals("Student nie posiada wymaganej liczby ECTS", ectsJSON.get("ectsInfo")); // Stworzona funkcja ma JSON z polem ectsInfo
@@ -72,12 +73,12 @@ public class TDDGradeLogicTest {
     }
 
     @Test
-    public void testAverageGrade() throws JSONException {
+    public void testCheckAverageGrade() throws JSONException {
         int id = 2;
         ResponseEntity<String> response = getResponse("/students/" + id);
-
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
         JSONObject jsonObj = new JSONObject(response.getBody());
         JSONArray gradesArray = (JSONArray) jsonObj.get("grades");
         double gradesValueSum = 0;
@@ -86,7 +87,6 @@ public class TDDGradeLogicTest {
             gradesValueSum += (double) grade.get("value");
         }
         double average = gradesValueSum / gradesArray.length();
-
         response = getResponse("/students/checkAverage/" + id);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -98,16 +98,16 @@ public class TDDGradeLogicTest {
     public void testSumAllCoursesEcts() throws JSONException {
         ResponseEntity<String> response = getResponse("/courses/");
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONArray courses = new JSONArray(response.getBody());
 
+        JSONArray courses = new JSONArray(response.getBody());
         int ectsSum = 0;
         for (int i = 0; i < courses.length(); i++) {
             JSONObject course = courses.getJSONObject(i);
             ectsSum += course.getDouble("ects");
         }
-
         response = getResponse("/courses/ectsSum");
         assertEquals(HttpStatus.OK, response.getStatusCode());
+
         JSONObject responseEctsSum = new JSONObject(response.getBody());
         assertEquals(ectsSum, responseEctsSum.getInt("sum"));
     }
@@ -116,8 +116,8 @@ public class TDDGradeLogicTest {
     public void testFindPassedGrades() throws JSONException {
         ResponseEntity<String> response = getResponse("/grades/passed");
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        JSONArray grades = new JSONArray(response.getBody());
 
+        JSONArray grades = new JSONArray(response.getBody());
         for (int i = 0; i < grades.length(); i++) {
             JSONObject grade = grades.getJSONObject(i);
             int id = grade.getInt("id");

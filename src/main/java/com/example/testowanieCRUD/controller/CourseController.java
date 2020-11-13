@@ -51,12 +51,12 @@ public class CourseController {
     }
 
     @GetMapping("/courses/ectsSum")
-    public Map<String, String> ectsSum() {
+    public Map<String, String> getECTSSum() {
         int ectsSum = courseService.getECTSSum();
         return Collections.singletonMap("sum", ectsSum + "");
     }
 
-    @DeleteMapping("/course/{id}")
+    @DeleteMapping("/courses/{id}")
     public void deleteCourse(@PathVariable Long id) {
         repository.deleteById(id);
     }

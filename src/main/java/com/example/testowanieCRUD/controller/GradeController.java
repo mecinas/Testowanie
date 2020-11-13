@@ -50,7 +50,7 @@ public class GradeController {
                 });
     }
 
-    @DeleteMapping("/grade/{id}")
+    @DeleteMapping("/grades/{id}")
     public void deleteGrade(@PathVariable Long id) {
         repository.deleteById(id);
     }
@@ -67,12 +67,12 @@ public class GradeController {
 
     @GetMapping("/grades/failed")
     public List<Grade> findByIsFailed() {
-        return gradeService.getFailed();
+        return gradeService.getFailedGrades();
     }
 
     @GetMapping("/grades/passed")
-    public List<Grade> findPassingGrades() {
-        return gradeService.findPassingGrades();
+    public List<Grade> findByIsPassed() {
+        return gradeService.getPassingGrades();
     }
 
 }

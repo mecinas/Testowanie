@@ -64,7 +64,7 @@ public class StudentController {
     }
 
     @GetMapping("/students/checkAverage/{id}")
-    public Map<String, Double> getAverageGrade(@PathVariable Long id) {
+    public Map<String, Double> checkAverageGrade(@PathVariable Long id) {
         double avg = studentService.getAverageGrade(id);
         return Collections.singletonMap("average", avg);
     }

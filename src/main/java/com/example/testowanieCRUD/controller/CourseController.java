@@ -2,17 +2,22 @@ package com.example.testowanieCRUD.controller;
 
 import com.example.testowanieCRUD.entity.Course;
 import com.example.testowanieCRUD.repository.CourseRepository;
+import com.example.testowanieCRUD.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CourseController {
 
     private final CourseRepository repository;
+    private final CourseService courseService;
 
-    CourseController(CourseRepository repository) {
+    CourseController(CourseRepository repository, CourseService courseService) {
         this.repository = repository;
+        this.courseService = courseService;
     }
 
     @GetMapping("/courses")
@@ -43,6 +48,12 @@ public class CourseController {
                     newCourse.setId(id);
                     return repository.save(newCourse);
                 });
+    }
+
+    @GetMapping("/courses/ectsSum")
+    public Map<String, String> ectsSum() {
+        int ectsSum = courseService.getECTSSum();
+        return Collections.singletonMap("sum", ectsSum + "");
     }
 
     @DeleteMapping("/course/{id}")

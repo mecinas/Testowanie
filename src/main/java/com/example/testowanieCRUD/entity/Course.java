@@ -3,6 +3,7 @@ package com.example.testowanieCRUD.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -24,7 +25,7 @@ public class Course {
     @NotNull
     private int ects;
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
     @JsonIgnore // prevents infinite loop when serializing
     private final Set<Student> students = new HashSet<>();
 

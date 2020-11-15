@@ -8,11 +8,13 @@ import com.example.testowanieCRUD.repository.CourseRepository;
 import com.example.testowanieCRUD.repository.GradeRepository;
 import com.example.testowanieCRUD.repository.StudentRepository;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.binder.PropertyId;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,8 @@ public class GradeEditor extends VerticalLayout {
 
     TextField semester = new TextField("Semester");
     NumberField value = new NumberField("Value");
-    TextField course_id = new TextField("Course ID");
-    TextField student_id = new TextField("Student ID");
+    ComboBox<Course> course_id = new ComboBox<>("Course");
+    ComboBox<Student> student_id = new ComboBox<>("Student");
 
     Button save = new Button("Save");
     Button cancel = new Button("Cancel");
@@ -48,8 +50,11 @@ public class GradeEditor extends VerticalLayout {
         add(semester, value, course_id, student_id, actions);
         binder.forField(semester).bind(Grade::getSemester, Grade::setSemester);
         binder.forField(value).withConverter(Double::floatValue, Double::valueOf).bind(Grade::getValue, Grade::setValue);
-        binder.forField(course_id).withConverter(c -> crepo.findById(Long.valueOf(c)).get(), String::valueOf).bind(Grade::getCourse, Grade::setCourse);
-        binder.forField(student_id).withConverter(s -> srepo.findById(Long.valueOf(s)).get(), String::valueOf).bind(Grade::getStudent, Grade::setStudent);
+        binder.forField(course_id).bind(Grade::getCourse, Grade::setCourse);
+        binder.forField(student_id).bind(Grade::getStudent, Grade::setStudent);
+
+        student_id.setItems(srepo.findAll());
+        student_id.setItemLabelGenerator(Student::getName);
 
         setSpacing(true);
 
@@ -78,6 +83,8 @@ public class GradeEditor extends VerticalLayout {
             setVisible(false);
             return;
         }
+        course_id.setItems(s.getStudent().getCourses());
+        course_id.setItemLabelGenerator(Course::getName);
         final boolean persisted = s.getId() != null;
         if (persisted) {
             grade = repository.findById(s.getId()).get();
@@ -88,6 +95,7 @@ public class GradeEditor extends VerticalLayout {
         cancel.setVisible(persisted);
 
         binder.setBean(grade);
+
 
         setVisible(true);
     }

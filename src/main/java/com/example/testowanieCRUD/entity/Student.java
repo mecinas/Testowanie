@@ -24,7 +24,7 @@ public class Student {
     @NotNull
     private LocalDate dateOfBirth;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable
     private final Set<Course> courses = new HashSet<>();
 

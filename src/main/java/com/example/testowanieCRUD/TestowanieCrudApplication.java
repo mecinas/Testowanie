@@ -35,8 +35,6 @@ public class TestowanieCrudApplication {
             studentRepository.save(szymon);
             studentRepository.save(jakub);
 
-
-
             Course testowanie = new Course("Testowanie oprogramowania", 4);
             Course programowanie = new Course("Programowanie obiektowe", 5);
             Course ochrona = new Course("Ochrona danych", 3);
@@ -52,13 +50,13 @@ public class TestowanieCrudApplication {
 
             courseRepository.saveAll(Arrays.asList(testowanie, programowanie, ochrona, angielski, modelowanie, fizyka, bazy, azure, niemiecki, grafika, systemy, obwody));
 
-
             damian.getCourses().addAll(Arrays.asList(testowanie, programowanie, ochrona,
                     angielski, modelowanie, fizyka, bazy, azure, niemiecki, grafika));
             szymon.getCourses().addAll(Arrays.asList(programowanie, ochrona, angielski));
             jakub.getCourses().addAll(Arrays.asList(testowanie, programowanie, ochrona));
             studentRepository.save(damian);
             studentRepository.save(szymon);
+            studentRepository.save(jakub);
 
 
             Grade dtg = new Grade("2017Z", 5.0F, damian, testowanie); // damianTestowanieGrade = dtg

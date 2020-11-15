@@ -63,6 +63,14 @@ public class Grade {
         return value;
     }
 
+    public Student getStudent() { return student; }
+
+    public void setStudent(Student student) { this.student = student;}
+
+    public Course getCourse() { return course; }
+
+    public void setCourse(Course course) { this.course = course;}
+
     public void setValue(float value) {
         this.value = value;
     }

@@ -1,5 +1,5 @@
 package sortAlgorithms;
 
 public interface SortAlgorithm {
-    public void sort();
+    int[] sort(int[] arr);
 }

@@ -8,12 +8,15 @@ public class InsertSort implements SortAlgorithm{
         this.arr = arr;
     }
 
+    public InsertSort() {}
+
     public void setArr(int[] arr) {
         this.arr = arr;
     }
 
     @Override
-    public void sort() {
+    public int[] sort(int[] arr) {
+        this.arr = arr;
         int len = arr.length;
         for (int i = 1; i <len; ++i) {
             int tmp = arr[i];
@@ -24,5 +27,6 @@ public class InsertSort implements SortAlgorithm{
             }
             arr[j + 1] = tmp;
         }
+        return arr;
     }
 }

@@ -7,6 +7,8 @@ public class Qsort implements SortAlgorithm{
         this.arr = arr;
     }
 
+    public Qsort() {}
+
     public void setArr(int[] arr) {
         this.arr = arr;
     }
@@ -47,8 +49,10 @@ public class Qsort implements SortAlgorithm{
         }
     }
 
-    public void sort(){
+    public int[] sort(int[] arr) {
+        this.arr = arr;
         pivotSort(0, arr.length-1);
+        return arr;
     }
 
 }

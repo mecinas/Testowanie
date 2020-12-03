@@ -16,7 +16,7 @@ public class Main {
 
 
 
-        sortAlgorithm.sort();
+        sortAlgorithm.sort(arr);
         //Arrays.sort(arr);
         //Arrays.parallelSort(arr);
         System.out.println(Arrays.toString(arr));

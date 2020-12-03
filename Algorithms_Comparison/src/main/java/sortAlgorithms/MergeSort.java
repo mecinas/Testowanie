@@ -8,6 +8,8 @@ public class MergeSort implements SortAlgorithm{
         this.arr = arr;
     }
 
+    public MergeSort() {}
+
     public void setArr(int[] arr) {
         this.arr = arr;
     }
@@ -64,7 +66,9 @@ public class MergeSort implements SortAlgorithm{
 
 
     @Override
-    public void sort() {
+    public int[] sort(int[] arr) {
+        this.arr = arr;
         graphSort(0 ,arr.length-1);
+        return arr;
     }
 }

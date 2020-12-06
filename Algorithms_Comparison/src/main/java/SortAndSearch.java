@@ -2,6 +2,8 @@ import findElementIndexAlgorithms.BinarySearch;
 import findElementIndexAlgorithms.SequentialSearch;
 import sortAlgorithms.*;
 
+import java.util.Arrays;
+
 public class SortAndSearch {
 
 //    SortAlgorithm sa;
@@ -18,29 +20,29 @@ public class SortAndSearch {
 //        return bs.findElementIndex(x);
 //    }
 
-    public static int bubbleSortAndSequentialSearch(int[] arr, int x) {
-        int[] arrSorted = new BubbleSort().sort(arr);
-        return new SequentialSearch(arrSorted).findElementIndex(x);
-    }
-
-    public static int insertSortAndSequentialSearch(int[] arr, int x) {
+    public static int[] bubbleSortAndSequentialSearch(int[] arr, int[] x) {
         int[] arrSorted = new InsertSort().sort(arr);
-        return new SequentialSearch(arrSorted).findElementIndex(x);
+        return Arrays.stream(x).map(xx -> new SequentialSearch(arrSorted).findElementIndex(xx)).toArray();
     }
 
-    public static int javaDefaultSortAndSequentialSearch(int[] arr, int x) {
-        int[] arrSorted = new JavaDefaultSort().sort(arr);
-        return new SequentialSearch(arrSorted).findElementIndex(x);
+    public static int[] insertSortAndSequentialSearch(int[] arr, int[] x) {
+        int[] arrSorted = new InsertSort().sort(arr);
+        return Arrays.stream(x).map(xx -> new SequentialSearch(arrSorted).findElementIndex(xx)).toArray();
     }
 
-    public static int mergeSortAndSequentialSearch(int[] arr, int x) {
-        int[] arrSorted = new MergeSort().sort(arr);
-        return new SequentialSearch(arrSorted).findElementIndex(x);
+    public static int[] javaDefaultSortAndSequentialSearch(int[] arr, int[] x) {
+        int[] arrSorted = new InsertSort().sort(arr);
+        return Arrays.stream(x).map(xx -> new SequentialSearch(arrSorted).findElementIndex(xx)).toArray();
     }
 
-    public static int quickSortAndSequentialSearch(int[] arr, int x) {
-        int[] arrSorted = new Qsort().sort(arr);
-        return new SequentialSearch(arrSorted).findElementIndex(x);
+    public static int[] mergeSortAndSequentialSearch(int[] arr, int[] x) {
+        int[] arrSorted = new InsertSort().sort(arr);
+        return Arrays.stream(x).map(xx -> new SequentialSearch(arrSorted).findElementIndex(xx)).toArray();
+    }
+
+    public static int[] quickSortAndSequentialSearch(int[] arr, int[] x) {
+        int[] arrSorted = new InsertSort().sort(arr);
+        return Arrays.stream(x).map(xx -> new SequentialSearch(arrSorted).findElementIndex(xx)).toArray();
     }
 
 

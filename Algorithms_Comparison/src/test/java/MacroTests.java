@@ -9,7 +9,7 @@ import java.util.Random;
 public class MacroTests {
 
 //    private final List<SortAlgorithm> algorithms = Arrays.asList(new BubbleSort(), new InsertSort(), new JavaDefaultSort(), new MergeSort(), new Qsort());
-    private final int[] DATA_SIZE = {100000};
+    private final int[] DATA_SIZE = {10000};
 
 //    @Test
 //    public void sortRandomVectorTest() {
@@ -33,21 +33,22 @@ public class MacroTests {
         System.out.println("Seed: " + seed);
         for (int DATA_SIZE_ : DATA_SIZE) {
             int[] data = new Random(seed).ints(DATA_SIZE_).toArray();
-            int x = data[Math.abs(new Random(seed).nextInt() % DATA_SIZE_)];
+            int[] x = new Random(seed).ints(1000).toArray();
+            x = Arrays.stream(x).map(y -> data[Math.abs(y % DATA_SIZE_)]).toArray();
             int[] dataCopy;
             dataCopy = Arrays.copyOf(data, data.length);
-            new SequentialSearch(dataCopy).findElementIndex(x);
+            new SequentialSearch(dataCopy).findElementIndex(x[0]);
 
             dataCopy = Arrays.copyOf(data, data.length);
-            System.out.println(SortAndSearch.insertSortAndSequentialSearch(dataCopy, x));
+            System.out.println(Arrays.toString(SortAndSearch.insertSortAndSequentialSearch(dataCopy, x)));
             dataCopy = Arrays.copyOf(data, data.length);
-            System.out.println(SortAndSearch.bubbleSortAndSequentialSearch(dataCopy, x));
+            System.out.println(Arrays.toString(SortAndSearch.bubbleSortAndSequentialSearch(dataCopy, x)));
             dataCopy = Arrays.copyOf(data, data.length);
-            System.out.println(SortAndSearch.javaDefaultSortAndSequentialSearch(dataCopy, x));
+            System.out.println(Arrays.toString(SortAndSearch.javaDefaultSortAndSequentialSearch(dataCopy, x)));
             dataCopy = Arrays.copyOf(data, data.length);
-            System.out.println(SortAndSearch.mergeSortAndSequentialSearch(dataCopy, x));
+            System.out.println(Arrays.toString(SortAndSearch.mergeSortAndSequentialSearch(dataCopy, x)));
             dataCopy = Arrays.copyOf(data, data.length);
-            System.out.println(SortAndSearch.quickSortAndSequentialSearch(dataCopy, x));
+            System.out.println(Arrays.toString(SortAndSearch.quickSortAndSequentialSearch(dataCopy, x)));
         }
     }
 

@@ -8,27 +8,10 @@ import java.util.Random;
 
 public class MacroTests {
 
-//    private final List<SortAlgorithm> algorithms = Arrays.asList(new BubbleSort(), new InsertSort(), new JavaDefaultSort(), new MergeSort(), new Qsort());
     private final int[] DATA_SIZE = {10000};
 
-//    @Test
-//    public void sortRandomVectorTest() {
-//        int seed = new Random().nextInt();
-//        System.out.println("Seed: " + seed);
-//        for (int DATA_SIZE_ : DATA_SIZE) {
-//            int[] data = new Random(seed).ints(DATA_SIZE_).toArray();
-//            for (SortAlgorithm alg : algorithms) {
-//                int[] dataCopy = Arrays.copyOf(data, data.length);
-//                int x = data[Math.abs(new Random(seed).nextInt() % DATA_SIZE_)];
-//                SortAndBinarySearch sabs = new SortAndBinarySearch(alg);
-//                int result = sabs.sortAndSearch(dataCopy, x);
-//                System.out.println(result);
-//            }
-//        }
-//    }
-
     @Test
-    public void test() {
+    public void profilerTest() {
         int seed = 111;
         System.out.println("Seed: " + seed);
         for (int DATA_SIZE_ : DATA_SIZE) {

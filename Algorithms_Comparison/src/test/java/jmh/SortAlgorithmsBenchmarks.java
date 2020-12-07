@@ -28,7 +28,7 @@ public class SortAlgorithmsBenchmarks {
 
     private int[] data;
 
-    private int seed = 111; //TODO
+    private int seed = 111;
 
     public static void main(String[] args) throws RunnerException {
 

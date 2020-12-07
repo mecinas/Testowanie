@@ -1,24 +1,9 @@
-import findElementIndexAlgorithms.BinarySearch;
 import findElementIndexAlgorithms.SequentialSearch;
 import sortAlgorithms.*;
 
 import java.util.Arrays;
 
 public class SortAndSearch {
-
-//    SortAlgorithm sa;
-//    BinarySearch bs;
-//
-//    public SortAndBinarySearch(SortAlgorithm sa){
-//        this.sa = sa;
-//        bs = new BinarySearch();
-//    }
-//
-//    public int sortAndSearch(int[] arr, int x) {
-//        int[] arrSorted = sa.sort(arr);
-//        bs.setArr(arrSorted);
-//        return bs.findElementIndex(x);
-//    }
 
     public static int[] bubbleSortAndSequentialSearch(int[] arr, int[] x) {
         int[] arrSorted = new BubbleSort().sort(arr);

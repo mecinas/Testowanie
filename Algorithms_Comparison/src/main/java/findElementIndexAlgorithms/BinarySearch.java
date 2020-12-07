@@ -1,6 +1,6 @@
 package findElementIndexAlgorithms;
 
-public class BinarySearch implements FindAlgorithm{ //Można jeszcze implementować rekursywnie
+public class BinarySearch implements FindAlgorithm{
     private int[] arr;
 
     public BinarySearch(int[] arr) {

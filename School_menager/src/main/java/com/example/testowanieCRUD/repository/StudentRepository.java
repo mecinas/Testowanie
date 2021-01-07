@@ -10,4 +10,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByNameIgnoreCase(String name);
 
     List<Student> findByDateOfBirth(LocalDate dateOfBirth);
+
+
+    List<Student> findByNameStartingWith(String startsWith);
 }

@@ -3,7 +3,9 @@ package com.example.testowanieCRUD.controller;
 import com.example.testowanieCRUD.entity.Student;
 import com.example.testowanieCRUD.repository.StudentRepository;
 import com.example.testowanieCRUD.service.StudentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +36,9 @@ public class StudentController {
     public Student one(@PathVariable Long id) {
 
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Student not found"
+                ));
     }
 
     @PutMapping("/students/{id}")
@@ -67,6 +71,13 @@ public class StudentController {
     public Map<String, Double> checkAverageGrade(@PathVariable Long id) {
         double avg = studentService.getAverageGrade(id);
         return Collections.singletonMap("average", avg);
+    }
+
+    @GetMapping("/studentsSearch")
+    public List<Student> checkAverageGrade(@RequestParam String startsWith) {
+        List<Student> result = repository.findByNameStartingWith(startsWith);
+        if(result.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
+        return result;
     }
 }
 

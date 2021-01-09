@@ -85,7 +85,6 @@ public class CheckStudentAverageGradeSteps {
         Assertions.assertEquals(HttpStatus.OK, postResponse.getStatusCode());
         Assertions.assertNotNull(postResponse.getBody());
         Assertions.assertTrue(postResponse.getBody().size() > 0);
-        System.out.println(postResponse.getBody().get("average"));
         Assertions.assertTrue(Math.abs((double)postResponse.getBody().get("average") - 3.5) < 0.0001 );
     }
 }
